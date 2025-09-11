@@ -6,7 +6,7 @@ include_once('templates/header.php')
 <!-- Begin Page Content -->
 <div class="container-fluid">
   <!-- Page Heading -->
-  <h1 class="h3 mb-4 text-gray-800">Buku Tamu</h1>
+  <h1 class="h3 mb-4 text-gray-800">Data User</h1>
 
   <?php
   if (isset($_POST['simpan'])) {
@@ -32,7 +32,7 @@ include_once('templates/header.php')
         <span class="icon text-white-50">
           <i class="fas fa-plus"></i>
         </span>
-        <span class="text">Data Tamu</span>
+        <span class="text">Data User</span>
       </button>
     </div>
     <div class="card-body">
@@ -41,12 +41,8 @@ include_once('templates/header.php')
           <thead>
             <tr>
               <th>No</th>
-              <th>Tanggal</th>
-              <th>Nama Tamu</th>
-              <th>Alamat</th>
-              <th>No. Telp/HP</th>
-              <th>Bertemu dengan</th>
-              <th>Kepentingan</th>
+              <th>Username</th>
+              <th>User Role</th>
               <th>Aksi</th>
             </tr>
           </thead>
@@ -55,18 +51,14 @@ include_once('templates/header.php')
             // penomoran auto-increment
             $no = 1;
             // Query untuk memanggil semua data dari tabel buku_tamu
-            $buku_tamu = query("SELECT * FROM buku_tamu");
-            foreach ($buku_tamu as $tamu): ?>
+            $users = query("SELECT * FROM users");
+            foreach ($users as $user) : ?>
               <tr>
                 <td><?= $no++; ?></td>
-                <td><?= $tamu['tanggal'] ?></td>
-                <td><?= $tamu['nama_tamu'] ?></td>
-                <td><?= $tamu['alamat'] ?></td>
-                <td><?= $tamu['no_hp'] ?></td>
-                <td><?= $tamu['bertemu'] ?></td>
-                <td><?= $tamu['kepentingan'] ?></td>
-                <td><a class="btn btn-success" href="edit-tamu.php?id=<?= $tamu['id_tamu'] ?>">Ubah</a>
-                  <a onclick="confirm('Apakah anda yakin ingin menghapus data ini?')" class="btn btn-danger" href="hapus-tamu.php?id=<?= $tamu['id_tamu'] ?>">Hapus</a>
+                <td><?= $user['username'] ?></td>
+                <td><?= $user['user_role'] ?></td>
+                <td><a class="btn btn-success" href="edit-tamu.php?id=<?= $user['id_user'] ?>">Ubah</a>
+                  <a onclick="confirm('Apakah anda yakin ingin menghapus data ini?')" class="btn btn-danger" href="hapus-tamu.php?id=<?= $user['id_user'] ?>">Hapus</a>
                 </td>
               </tr>
             <?php endforeach; ?>
@@ -100,7 +92,7 @@ $kodeTamu = $huruf . sprintf("%03s", $urutan);
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="tambahModalLabel">Tambah Data Tamu</h5>
+        <h5 class="modal-title" id="tambahModalLabel">Modal title</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
