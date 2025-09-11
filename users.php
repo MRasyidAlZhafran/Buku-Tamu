@@ -21,6 +21,20 @@ include_once('templates/header.php')
       <div class="alert alert-danger">
         Data gagal disimpan!
       </div>
+    <?php
+    }
+  } else if (isset($_POST['ganti_password'])) {
+    if (ganti_password($_POST) > 0) {
+    ?>
+      <div class="alert alert-success" role="alert">
+        Password berhasil diubah!
+      </div>
+    <?php
+    } else {
+    ?>
+      <div class="alert alert-danger" role="alert">
+        Password gagal diubah!
+      </div>
   <?php
     }
   }
@@ -57,7 +71,11 @@ include_once('templates/header.php')
                 <td><?= $no++; ?></td>
                 <td><?= $user['username'] ?></td>
                 <td><?= $user['user_role'] ?></td>
-                <td><a class="btn btn-success" href="edit-user.php?id=<?= $user['id_user'] ?>">Ubah</a>
+                <td>
+                  <button type="button" class="btn btn-info btn-icon-split" data-toggle="modal" data-target="#gantiPassword" data-id="<?= $user['id_user'] ?>">
+                    <span class="text">Ganti Password</span>
+                  </button>
+                  <a class="btn btn-success" href="edit-user.php?id=<?= $user['id_user'] ?>">Ubah</a>
                   <a onclick="confirm('Apakah anda yakin ingin menghapus data ini?')" class="btn btn-danger" href="hapus-user.php?id=<?= $user['id_user'] ?>">Hapus</a>
                 </td>
               </tr>
@@ -92,7 +110,7 @@ $kodeuser = $huruf . sprintf("%02s", $urutan);
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="tambahModalLabel">Modal title</h5>
+        <h5 class="modal-title" id="tambahModalLabel">Tambah Data User</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -128,6 +146,34 @@ $kodeuser = $huruf . sprintf("%02s", $urutan);
   </div>
 </div>
 
+<!-- Modal Ganti Password -->
+<div class="modal fade" id="gantiPassword" tabindex="-1" aria-labelledby="gantiPasswordLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="gantiPasswordLabel">Ganti Password</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form method="post" action="">
+          <input type="hidden" name="id_user" id="id_user">
+          <div class="form-group row">
+            <label for="password" class="col-sm-3 col-form-label">Password Baru</label>
+            <div class="col-sm-7">
+              <input type="password" class="form-control" id="password" name="password">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Keluar</button>
+            <button type="submit" name="ganti_password" class="btn btn-primary">Simpan</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 <!-- /.container-fluid -->
 
 <?php
