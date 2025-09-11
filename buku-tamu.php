@@ -89,18 +89,18 @@ $urutan = (int) substr($kodeTamu, 2, 3);
 $urutan++;
 
 // membuat kode barang baru
-// string sprint("%03s", $urutan); berfungsi untuk membuat string menjadi 3 karakter
+// string sprintf("%03s", $urutan); berfungsi untuk membuat string menjadi 3 karakter
 
 // angka yang diambil tadi digabungkan dengan kode huruf yang kita inginkan, misalnya zt
 $huruf = 'zt';
 $kodeTamu = $huruf . sprintf("%03s", $urutan);
 ?>
 <!-- Modal Tambah -->
-<div class="modal fade" id="tambahModal" tabindex="-1" aria-labelledby="tambahModal" aria-hidden="true">
+<div class="modal fade" id="tambahModal" tabindex="-1" aria-labelledby="tambahModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="tambahModal">Modal title</h5>
+        <h5 class="modal-title" id="tambahModalLabel">Modal title</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -146,7 +146,6 @@ $kodeTamu = $huruf . sprintf("%03s", $urutan);
       </form>
     </div>
   </div>
-</div>
 </div>
 
 <!-- /.container-fluid -->
