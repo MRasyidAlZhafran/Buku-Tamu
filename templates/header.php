@@ -1,10 +1,13 @@
 <?php
-// memulai session
-session_start();
+// aktifkan session dulu sebelum ngecek
+if (session_status() === PHP_SESSION_NONE) {
+  session_start();
+}
 
-// cek bila ada user yang sudah login maka akan redirect ke halaman login
-if (isset($_SESSION['login'])) {
+// cek bila user belum login maka akan redirect ke halaman login
+if (!isset($_SESSION['login'])) {
   header('Location:login.php');
+  exit;
 }
 ?>
 
@@ -61,11 +64,16 @@ if (isset($_SESSION['login'])) {
           <span>Dashboard</span></a>
       </li>
 
-      <li class="nav-item">
-        <a class="nav-link" href="buku-tamu.php">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Buku Tamu</span></a>
-      </li>
+      <?php
+      // cek apabila ada user login dan user role nya adalah operator maka tampilkan buku-tamu
+      if (isset($_SESSION['role']) && $_SESSION['role'] == 'operator') :
+      ?>
+        <li class="nav-item">
+          <a class="nav-link" href="buku-tamu.php">
+            <i class="fas fa-fw fa-book-open"></i>
+            <span>Buku Tamu</span></a>
+        </li>
+      <?php endif; ?>
 
       <li class="nav-item">
         <a class="nav-link" href="laporan.php">
@@ -73,11 +81,16 @@ if (isset($_SESSION['login'])) {
           <span>Laporan</span></a>
       </li>
 
-      <li class="nav-item">
-        <a class="nav-link" href="users.php">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>User</span></a>
-      </li>
+      <?php
+      // cek apabila ada user login dan user role nya adalah admin maka tampilkan user
+      if (isset($_SESSION['role']) && $_SESSION['role'] == 'operator') :
+      ?>
+        <li class="nav-item">
+          <a class="nav-link" href="users.php">
+            <i class="fas fa-fw fa-users"></i>
+            <span>User</span></a>
+        </li>
+      <?php endif; ?>
 
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
@@ -86,12 +99,13 @@ if (isset($_SESSION['login'])) {
       // cek apabila ada user login maka tampilkan logout
       if (isset($_SESSION['login'])) :
       ?>
-        <li>
+        <li class="nav-item">
           <a class="nav-link" href="logout.php">
             <i class="fas fa-fw fa-power-off"></i>
             <span>Logout</span></a>
         </li>
       <?php endif; ?>
+
 
       <!-- Sidebar Toggler (Sidebar) -->
       <div class="text-center d-none d-md-inline">

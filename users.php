@@ -1,7 +1,14 @@
 <?php
-require_once('function.php');
-include_once('templates/header.php')
+include_once('function.php');
+include_once('templates/header.php');
+
+// pengecekan user role bukan operator maka tidak boleh mengakses halaman
+if (($_SESSION['role']) != 'operator') {
+  echo "<script>alert('Anda tidak memiliki akses')</script>";
+  echo "<script>window.location.href='index.php'</script>";
+}
 ?>
+
 
 <!-- Begin Page Content -->
 <div class="container-fluid">
@@ -76,7 +83,7 @@ include_once('templates/header.php')
                     <span class="text">Ganti Password</span>
                   </button>
                   <a class="btn btn-success" href="edit-user.php?id=<?= $user['id_user'] ?>">Ubah</a>
-                  <a onclick="confirm('Apakah anda yakin ingin menghapus data ini?')" class="btn btn-danger" href="hapus-user.php?id=<?= $user['id_user'] ?>">Hapus</a>
+                  <a onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')" class="btn btn-danger" href="hapus-user.php?id=<?= $user['id_user'] ?>">Hapus</a>
                 </td>
               </tr>
             <?php endforeach; ?>

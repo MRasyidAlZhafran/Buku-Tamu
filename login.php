@@ -2,39 +2,44 @@
 // memulai session
 session_start();
 
-// cek bila ada user yang sudah login maka akan redirect ke halaman dashboard
-if (isset($_SESSION['login'])) {
-  header('Location: index.php');
-}
-
-if (password_verify($password, $row['password'])) {
-  $_SESSION['login'] = true;
-  $_SESSION['username'] = $username;
-}
-
-?>
-
-<?php
+// menghubungkan ke database
 require 'koneksi.php';
+
+// cek bila ada user yang sudah login maka akan redirect ke halaman dashboard
+// pastikan ini hanya dijalankan kalau session sudah valid
+if (isset($_SESSION['login']) && $_SESSION['login'] === true) {
+  header('Location: index.php');
+  exit;
+}
+
+// cek apakah tombol login ditekan
 if (isset($_POST['login'])) {
+  // ambil data dari form
   $username = $_POST['username'];
   $password = $_POST['password'];
 
+  // cari username di database
   $result = mysqli_query($koneksi, "SELECT * FROM users WHERE username = '$username'");
 
-  // cek apakah ada username
+  // cek apakah username ditemukan
   if (mysqli_num_rows($result) == 1) {
-    // cek apakah passwordnya benar
+    // ambil data user
     $row = mysqli_fetch_assoc($result);
 
+    // cek apakah password cocok
     if (password_verify($password, $row['password'])) {
+      // set session login
+      $_SESSION['login'] = true;
+      $_SESSION['username'] = $username;
+      $_SESSION['role'] = $row['user_role'];
 
-      // login berhasil
+      // login berhasil, lempar ke halaman utama
       header("Location: index.php");
       exit;
     }
   }
 
+  // kalau login gagal, munculkan error
   $error = true;
 }
 ?>

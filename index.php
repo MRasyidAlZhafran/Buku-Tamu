@@ -1,5 +1,13 @@
 <?php
-include_once('templates/header.php')
+session_start();
+
+// kalau belum login, redirect ke login.php
+if (!isset($_SESSION['login'])) {
+  header('Location: login.php');
+  exit;
+}
+
+include_once('templates/header.php');
 ?>
 
 <!-- Begin Page Content -->
@@ -12,5 +20,5 @@ include_once('templates/header.php')
 <!-- /.container-fluid -->
 
 <?php
-include_once('templates/footer.php')
+include_once('templates/footer.php');
 ?>

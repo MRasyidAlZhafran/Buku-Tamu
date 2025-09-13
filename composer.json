@@ -1,0 +1,13 @@
+{
+    "name": "ziebukutamu/buku-tamu",
+    "description": "Ziebukutamu",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Ziebukutamu\\BukuTamu\\": "src/"
+        }
+    },
+    "require": {
+        "phpoffice/phpspreadsheet": "^5.1"
+    }
+}
