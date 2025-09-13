@@ -1,8 +1,24 @@
 <?php
+// memulai session
+session_start();
+
+// cek bila ada user yang sudah login maka akan redirect ke halaman dashboard
+if (isset($_SESSION['login'])) {
+  header('Location: index.php');
+}
+
+if (password_verify($password, $row['password'])) {
+  $_SESSION['login'] = true;
+  $_SESSION['username'] = $username;
+}
+
+?>
+
+<?php
 require 'koneksi.php';
 if (isset($_POST['login'])) {
   $username = $_POST['username'];
-  $paassword = $_POST['password'];
+  $password = $_POST['password'];
 
   $result = mysqli_query($koneksi, "SELECT * FROM users WHERE username = '$username'");
 
@@ -11,7 +27,7 @@ if (isset($_POST['login'])) {
     // cek apakah passwordnya benar
     $row = mysqli_fetch_assoc($result);
 
-    if (password_verify($paassword, $row['password'])) {
+    if (password_verify($password, $row['password'])) {
 
       // login berhasil
       header("Location: index.php");
